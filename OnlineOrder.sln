@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mango.Services.CouponApi", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineOrder.Web", "OnlineOrder.Web\OnlineOrder.Web.csproj", "{74C04874-2520-4256-8D2F-27003BCFE50D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineOrder.Services.AuthApi", "OnlineOrder.Services.AuthApi\OnlineOrder.Services.AuthApi.csproj", "{BCE5C3FA-A34F-4B53-BF86-944FA4BA8A5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{74C04874-2520-4256-8D2F-27003BCFE50D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74C04874-2520-4256-8D2F-27003BCFE50D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74C04874-2520-4256-8D2F-27003BCFE50D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE5C3FA-A34F-4B53-BF86-944FA4BA8A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE5C3FA-A34F-4B53-BF86-944FA4BA8A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE5C3FA-A34F-4B53-BF86-944FA4BA8A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE5C3FA-A34F-4B53-BF86-944FA4BA8A5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F0779F2E-8BA8-4019-9793-EEEDF570DEDD} = {5098319D-CA4D-4CE6-A45F-37CC34EC3186}
 		{74C04874-2520-4256-8D2F-27003BCFE50D} = {171538BF-9878-4830-B6FD-6DCA87F5FE93}
+		{BCE5C3FA-A34F-4B53-BF86-944FA4BA8A5D} = {5098319D-CA4D-4CE6-A45F-37CC34EC3186}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {307559E6-3653-415D-89DB-B77021D0C7CD}
