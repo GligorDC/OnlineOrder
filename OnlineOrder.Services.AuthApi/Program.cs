@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineOrder.Services.AuthApi.Data;
 using OnlineOrder.Services.AuthApi.Models;
+using OnlineOrder.Services.AuthApi.Service;
+using OnlineOrder.Services.AuthApi.Service.IService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +14,15 @@ builder.Services.AddDbContext<AppDbContext>(
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JWTOptions"));
+
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().
     AddDefaultTokenProviders();
 
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();  
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
