@@ -34,12 +34,13 @@ namespace OnlineOrder.Services.AuthApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
-            _responseDto.Result = await _authService.Login(loginRequestDto);
-            if(_responseDto.Result == null) {
+            var loginResponseDto = await _authService.Login(loginRequestDto);
+            if(loginResponseDto.User == null) {
                 _responseDto.IsSuccesful = false;
                 _responseDto.Message = "The username or password is incorrect";
                 return BadRequest(_responseDto);
             }
+            _responseDto.Result = loginResponseDto;
 
             return Ok(_responseDto);
         }

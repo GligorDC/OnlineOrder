@@ -7,12 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<ICouponService,CouponService>();
+builder.Services.AddHttpClient<IAuthService, AuthService>();
+
 ApiBase.Coupon = builder.Configuration["ServiceUrls:CouponAPI"];
+ApiBase.Auth = builder.Configuration["ServiceUrls:AuthAPI"];
 
 builder.Services.AddScoped<IBaseService, BaseServices>();
 builder.Services.AddScoped<ICouponService, CouponService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

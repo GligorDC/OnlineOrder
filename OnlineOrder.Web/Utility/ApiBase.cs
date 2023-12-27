@@ -2,6 +2,7 @@
 {
     public class ApiBase
     {
-        public static string Coupon {  get; set; } 
+        public static string Coupon {  get; set; }
+        public static string Auth { get; set; }
     }
 }
