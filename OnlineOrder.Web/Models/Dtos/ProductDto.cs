@@ -1,4 +1,6 @@
-﻿namespace OnlineOrder.Web.Models.Dto
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OnlineOrder.Web.Models.Dto
 {
     public class ProductDto
     {
@@ -8,5 +10,7 @@
         public string Description { get; set; }
         public string CategoryName { get; set; }
         public string ImageUrl { get; set; }
+        [Range(1, 120)]
+        public int Count { get; set; } = 1;
     }
 }
