@@ -19,7 +19,7 @@ namespace OnlineOrder.Web.Services
                 ApiType = Utility.ApiRequestType.POST,
                 Data = registrationRequestDto,
                 URL = ApiBase.Auth + "/api/auth/AssignRole"
-            });
+            },withBearer: false);
         }
 
         public async Task<ResponseDto?> LoginAsync(LoginRequestDto loginRequestDto)
@@ -29,7 +29,7 @@ namespace OnlineOrder.Web.Services
                 ApiType = Utility.ApiRequestType.POST,
                 Data = loginRequestDto,
                 URL = ApiBase.Auth + "/api/auth/login"
-            });
+            }, withBearer: false);
         }
 
         public async Task<ResponseDto?> RegisterAsync(RegistrationRequestDto registrationRequestDto)

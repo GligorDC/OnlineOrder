@@ -1,24 +1,24 @@
 ﻿using AutoMapper;
-using OnlineOrder.Services.CouponApi.Data;
-using OnlineOrder.Services.CouponApi.Models;
-using OnlineOrder.Services.CouponApi.Models.Dto;
+using OnlineOrder.Services.ProductApi.Data;
+using OnlineOrder.Services.ProductApi.Models;
+using OnlineOrder.Services.ProductApi.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace OnlineOrder.Services.CouponApi.Controllers
+namespace OnlineOrder.Services.ProductApi.Controllers
 {
-    [Route("api/coupon")]
+    [Route("api/product")]
     [ApiController]
     [Authorize]
-    public class CouponAPIController : Controller
+    public class ProductAPIController : Controller
     {
         private readonly AppDbContext _db;
         private ResponseDto _responseDto;
         private IMapper _mapper;
-        private readonly string CouponAddedMessage = "The coupon was added succesfuly";
-        private readonly string CouponDeletedMessage = "The coupon was deleted succesfuly";
-        private readonly string CouponUpdatedMessage = "The coupon was updated succesfuly";
-        public CouponAPIController(AppDbContext db, IMapper mapper)
+        private readonly string ProductAddedMessage = "The Product was added succesfuly";
+        private readonly string ProductDeletedMessage = "The Product was deleted succesfuly";
+        private readonly string ProductUpdatedMessage = "The Product was updated succesfuly";
+        public ProductAPIController(AppDbContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
@@ -30,8 +30,8 @@ namespace OnlineOrder.Services.CouponApi.Controllers
         {
             try
             {
-                IEnumerable<Coupon> coupons = _db.Coupons.ToList();
-                _responseDto.Result = _mapper.Map<IEnumerable<CouponDto>>(coupons);
+                IEnumerable<Product> products = _db.Products.ToList();
+                _responseDto.Result = _mapper.Map<IEnumerable<ProductDto>>(products);
 
                 return _responseDto;
 
@@ -51,28 +51,8 @@ namespace OnlineOrder.Services.CouponApi.Controllers
         {
             try
             {
-                var coupons = _db.Coupons.First(coupon => coupon.Id == id);
-                _responseDto.Result = _mapper.Map<CouponDto>(coupons);
-
-                return _responseDto;
-            }
-            catch (Exception ex)
-            {
-                _responseDto.IsSuccesful = false;
-                _responseDto.Message = ex.Message;
-
-                return _responseDto;
-            }
-        }
-
-        [HttpGet]
-        [Route("GetByCode/{code}")]
-        public ResponseDto Get(string code)
-        {
-            try
-            {
-                var coupons = _db.Coupons.FirstOrDefault(coupon => coupon.Code.ToLower() == code.ToLower());
-                _responseDto.Result = _mapper.Map<CouponDto>(coupons);
+                var Products = _db.Products.First(Product => Product.Id == id);
+                _responseDto.Result = _mapper.Map<ProductDto>(Products);
 
                 return _responseDto;
             }
@@ -88,17 +68,17 @@ namespace OnlineOrder.Services.CouponApi.Controllers
 
         [HttpPost]
         [Authorize(Roles ="ADMIN")]
-        public ResponseDto Post([FromBody]CouponDto couponDto)
+        public ResponseDto Post([FromBody]ProductDto productDto)
         {
             try
             {
-                Coupon coupon =_mapper.Map<Coupon>(couponDto);
+                Product Product =_mapper.Map<Product>(productDto);
                 
-                _db.Coupons.Add(coupon);
+                _db.Products.Add(Product);
                 _db.SaveChanges();
 
-                _responseDto.Result = _mapper.Map<CouponDto>(coupon);
-                _responseDto.Message = CouponAddedMessage;
+                _responseDto.Result = _mapper.Map<ProductDto>(Product);
+                _responseDto.Message = ProductAddedMessage;
 
                 return _responseDto;
             }
@@ -113,17 +93,17 @@ namespace OnlineOrder.Services.CouponApi.Controllers
 
         [HttpPut]
         [Authorize(Roles = "ADMIN")]
-        public ResponseDto Put([FromBody] CouponDto couponDto)
+        public ResponseDto Put([FromBody] ProductDto productDto)
         {
             try
             {
-                Coupon coupon = _mapper.Map<Coupon>(couponDto);
+                Product Product = _mapper.Map<Product>(productDto);
 
-                _db.Coupons.Update(coupon);
+                _db.Products.Update(Product);
                 _db.SaveChanges();
 
-                _responseDto.Result = _mapper.Map<CouponDto>(coupon);
-                _responseDto.Message = CouponUpdatedMessage;
+                _responseDto.Result = _mapper.Map<ProductDto>(Product);
+                _responseDto.Message = ProductUpdatedMessage;
 
                 return _responseDto;
             }
@@ -143,11 +123,11 @@ namespace OnlineOrder.Services.CouponApi.Controllers
         {
             try
             {
-                Coupon coupon = _db.Coupons.First(coupon => coupon.Id == id);
-                _db.Coupons.Remove(coupon);
+                Product Product = _db.Products.First(Product => Product.Id == id);
+                _db.Products.Remove(Product);
                 _db.SaveChanges();
                 
-                _responseDto.Message = CouponDeletedMessage;
+                _responseDto.Message = ProductDeletedMessage;
 
                 return _responseDto;
             }

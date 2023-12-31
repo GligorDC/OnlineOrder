@@ -4,5 +4,6 @@
     {
         public static string Coupon {  get; set; }
         public static string Auth { get; set; }
+        public static string Product { get; set; }
     }
 }

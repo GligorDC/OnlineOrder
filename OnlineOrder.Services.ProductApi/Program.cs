@@ -1,12 +1,12 @@
 using AutoMapper;
-using OnlineOrder.Services.CouponApi.AutoMapper;
-using OnlineOrder.Services.CouponApi.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Mango.Services.CouponApi.Extensions;
+using OnlineOrder.Services.ProductApi.Data;
+using OnlineOrder.Services.ProductApi.AutoMapper;
+using Mango.Services.ProductApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

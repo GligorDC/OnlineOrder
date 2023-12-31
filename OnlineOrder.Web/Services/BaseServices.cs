@@ -9,19 +9,26 @@ namespace OnlineOrder.Web.Services
     public class BaseServices : IBaseService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public BaseServices(IHttpClientFactory httpClientFactory)
+        private readonly ITokenProvider _tokenProvider;
+        public BaseServices(IHttpClientFactory httpClientFactory, ITokenProvider tokenProvider)
         {
             _httpClientFactory = httpClientFactory;
+            _tokenProvider = tokenProvider;
         }
 
-        public async Task<ResponseDto?> SendAsync(RequestDto requestDto)
+        public async Task<ResponseDto?> SendAsync(RequestDto requestDto, bool withBearer = true)
         {
             try
             {
                 using HttpClient client = _httpClientFactory.CreateClient("OnlineOrderAPI");
                 HttpRequestMessage message = new();
                 message.Headers.Add("Accept", "application/json");
-                //token
+
+                if(withBearer)
+                {
+                    var token = _tokenProvider.GetToken();
+                    message.Headers.Add("Authorization", $"Bearer {token}");
+                }
 
                 message.RequestUri = new Uri(requestDto.URL);
                 if (requestDto.Data != null)
@@ -56,6 +63,8 @@ namespace OnlineOrder.Web.Services
                         return new ResponseDto() { IsSuccesful = false, Message = "Access Denied" };
                     case System.Net.HttpStatusCode.Unauthorized:
                         return new ResponseDto() { IsSuccesful = false, Message = "Unauthorized" };
+                    case System.Net.HttpStatusCode.BadRequest:
+                        return new ResponseDto() { IsSuccesful = false, Message = "Bad request" };
                     case System.Net.HttpStatusCode.InternalServerError:
                         return new ResponseDto() { IsSuccesful = false, Message = "Internal Server Error" };
                     default:

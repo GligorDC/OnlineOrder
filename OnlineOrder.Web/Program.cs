@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using OnlineOrder.Web.Services;
 using OnlineOrder.Web.Services.IServices;
 using OnlineOrder.Web.Utility;
@@ -10,16 +11,26 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddHttpClient();
-builder.Services.AddHttpClient<ICouponService,CouponService>();
+builder.Services.AddHttpClient<ICouponService, CouponService>();
 builder.Services.AddHttpClient<IAuthService, AuthService>();
 
 ApiBase.Coupon = builder.Configuration["ServiceUrls:CouponAPI"];
 ApiBase.Auth = builder.Configuration["ServiceUrls:AuthAPI"];
+ApiBase.Product = builder.Configuration["ServiceUrls:ProductAPI"];
 
 builder.Services.AddScoped<IBaseService, BaseServices>();
 builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromHours(10);
+        options.LoginPath = "/Auth/Login";
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+    });
 
 var app = builder.Build();
 
@@ -35,6 +46,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

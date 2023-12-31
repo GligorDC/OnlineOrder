@@ -32,6 +32,8 @@ namespace OnlineOrder.Services.AuthApi.Service
                 return new LoginResponseDto() { User = null, Token = "" };
             }
 
+            var roles = await _userManager.GetRolesAsync(user);
+
             return new LoginResponseDto()
             {
                 User = new UserDto()
@@ -41,7 +43,7 @@ namespace OnlineOrder.Services.AuthApi.Service
                     Name = user.Name,
                     PhoneNumber = user.PhoneNumber,
                 },
-                Token = _jwtTokenGenerator.GenerateToken(user),
+                Token = _jwtTokenGenerator.GenerateToken(user, roles),
             };
         }
 
